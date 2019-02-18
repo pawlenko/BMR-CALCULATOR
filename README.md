@@ -1,2 +1,3 @@
 # BMR-CALCULATOR
-Simple BMR/CPM calculator in pure JS
+Just simple BMR-CPM calculator using JS. BMR base on Harrisa-Benedicta formula.
+
