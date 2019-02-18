@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+    <title>BMR-CPM calculator</title>
+  </head>
+  <body>
+    
+	<div class="wrapper">
+		<div class="formContent">
+		<div id="alertBox"></div>
+		<div class="divider"></div>
+		
+			<div class="btn-group btn-group-toggle formElement" data-toggle="buttons">
+				<label class="btn  btn-outline-dark  active" id="male">
+				<input type="radio" name="options"  autocomplete="off" checked> Male
+				</label>
+				<label class="btn btn-outline-dark " id="female">
+				<input type="radio" name="options"  autocomplete="off"> Female
+				</label>
+			</div>
+			
+			 
+	
+			<div class="divider"></div>
+			
+			<div class="form-group formGroupItem">
+				  <label  class="col-2 col-form-label">Age</label>
+				  <div class="col-10">
+					<input class="form-control" id="age" type="text" style="width: 95%;" value="20">
+				  </div>
+			</div>
+			<div class="form-group formGroupItem ">
+				  <label  class="col-2 col-form-label">Height</label>
+				  <div class="col-6">
+					<input class="form-control" id="height" type="text" style="width: 95%;" value="150">
+			</div>
+				  
+				    <div class="col-4">
+					<div class="btn-group btn-group-toggle " data-toggle="buttons">
+				<label class="btn  btn-outline-dark  active" id="cm">
+				<input type="radio" name="options"  autocomplete="off" checked>  cm 
+				</label>
+				<label class="btn btn-outline-dark " id="ft">
+				<input type="radio" name="options"  autocomplete="off"> ft
+				</label>
+			</div>
+			</div>
+			
+			
+			</div>
+			<div class="form-group formGroupItem ">
+				  <label  class="col-2 col-form-label">Weight</label>
+				  <div class="col-6">
+					<input class="form-control" id="weight" type="text" style="width: 95%;" value="72">
+				  </div>
+				  		    <div class="col-4">
+					<div class="btn-group btn-group-toggle " id="kg"data-toggle="buttons">
+				<label class="btn  btn-outline-dark  active">
+				<input type="radio" name="options"   autocomplete="off" checked> kg
+				</label>
+				<label class="btn btn-outline-dark " id="lbs">
+				<input type="radio" name="options"  autocomplete="off" > lbs
+				</label>
+			</div>
+			</div>
+			
+			</div>
+			
+			
+			<div class="divider"></div>
+			
+		
+			
+			<div class="form-group formGroupItem ">
+				  <label  class="col-2 col-form-label">Activity</label>
+				   <div class="col-10">
+				    <select class="form-control"  style="width: 95%;" id="activity">
+						<option value="1.2">Lack of any activity</option>
+						<option value="1.3">Low physical activity (1 workouts a week) </option>
+						<option value="1.4">+ Low physical activity (2 workouts a week) </option>
+						<option value="1.5">Medium physical activity (3 workout per week) </option>
+						<option value="1.6">+ Medium physical activity (4 workout per week) </option>
+						<option value="1.7">High physical activity (3 workout per week + physical work) </option>
+						<option value="1.8">+ High physical activity (4 workout per week + physical work) </option>
+					    <option value="1.9">Very high physical activity (athletes, people who train every day) </option>
+						<option value="2.2">+ Very high physical activity (athletes, people who train every day) </option>
+					</select>
+				  </div>
+			</div>
+			
+				<div class="divider"></div>
+				
+				<div  id="submit"  class="btn btn-success formSubmit"> SUBMIT </div>
+				
+				<div class="divider"></div>
+			
+				<div class="form-group formGroupItem ">
+				  <label  class="col-2 col-form-label">BMR</label>
+				  <div class="col-10">
+					<input class="form-control" id="bmr" type="text" style="width: 95%;" readonly>
+				  </div>
+				</div>
+				
+				<div class="form-group formGroupItem ">
+				  <label  class="col-2 col-form-label">CPM</label>
+				  <div class="col-10">
+					<input class="form-control" id="cpm" type="text" style="width: 95%;" readonly>
+				  </div>
+				</div>
+		
+			<div class="divider"></div>
+			
+			
+	</div>
+	
+	<script>
+	
+
+function isNumericAndGreatherThanZero(num){
+  return !isNaN(num)  && num >0
+}
+
+$( "#submit" ).click(function() {
+
+  var age = $("#age").val();
+  var height = $("#height").val();
+  var weight = $("#weight").val();
+
+  
+  if(!isNumericAndGreatherThanZero(age) ||  !isNumericAndGreatherThanZero(height) || !isNumericAndGreatherThanZero(weight)){
+		$('#alertBox').html("<div class='alert alert-danger alert-dismissible fade show' role='alert'> <strong>Incorrect values!</strong> Check the correctness of the entered values. <button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span> </button> </div>");
+		return;
+  }
+  
+  var activity = $("#activity").val();		
+  var male = $('#male').hasClass( "active" );
+  var ft = $('#ft').hasClass( "active" );
+  var lbs = $('#lbs').hasClass( "active" );
+  
+  
+
+  
+  if(ft){
+   height = height * 30.48;
+  }
+  
+ 
+  
+  if(lbs){
+  weight = weight * 0.45359237;
+  }
+  
+ var ageFactor,weightFactor,heightFactor,additionalFactor;
+ 
+ if(male){
+	additionalFactor = 66;
+	weightFactor = 13.7;
+	heightFactor = 5;
+	ageFactor=6.76;
+ }else{
+	additionalFactor = 655;
+	weightFactor = 9.6;
+	heightFactor = 1.8;
+	ageFactor=4.7;
+ }
+ 
+ 
+ var result =  Math.round((additionalFactor + (weightFactor*weight) + (heightFactor *height) - (ageFactor * age))) ;
+ 
+ $("#bmr").val(result);
+ $("#cpm").val(Math.round(result*activity));
+  
+});
+	
+
+	
+	</script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  </body>
+</html>
